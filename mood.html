@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Happy Life</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+<header>
+    <nav>
+        <ul>
+            <li><a href="homepage.html">Home</a></li>
+            <li><a href="resources.html">Resources</a></li>
+            <li><a href="contact.html">Contacts</a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
+    </nav>
+</header>
+
+<section id="mood-assessment">
+    <h2>Mood Assessment</h2>
+    <p>How are you feeling today?</p>
+    <div class="dropdown">
+        <select id="mood-select">
+            <option value="" selected disabled>Select your mood</option>
+            <option value="low">Low</option>
+            <option value="neutral">Neutral</option>
+            <option value="happy">Happy</option>
+        </select>
+    </div>
+    <div class="mood-feedback" id="mood-feedback">
+        <!-- Feedback will appear here -->
+    </div>
+</section>
+
+<section id="mood-tracker">
+    <h2>Mood Tracker 😊</h2>
+    <form id="mood-form">
+        <label for="mood">How are you feeling today?</label>
+        <div id="emoji-picker">
+            <button type="button" class="emoji-btn" data-mood="Happy">😊</button>
+            <button type="button" class="emoji-btn" data-mood="Sad">😢</button>
+            <button type="button" class="emoji-btn" data-mood="Angry">😠</button>
+            <button type="button" class="emoji-btn" data-mood="Anxious">😟</button>
+            <button type="button" class="emoji-btn" data-mood="Neutral">😐</button>
+        </div>
+        <label for="mood-note">Notes (optional):</label>
+        <textarea id="mood-note" name="mood-note" placeholder="What’s on your mind?"></textarea>
+        <button type="submit">Log Mood</button>
+    </form>
+    <div id="mood-log">
+        <ul id="mood-entries">
+            <!-- Mood entries will appear here -->
+        </ul>
+    </div>
+</section>
+<section id="compliment-section">
+    <h2>💖 A Compliment for You</h2>
+    <button id="get-compliment">Give me a smile 😊</button>
+    <p id="compliment-text"></p>
+</section>
+<section id="music-section">
+    <h2>🎶 Uplift Your Mood</h2>
+    <button id="play-music">Play a Happy Tune</button>
+    <audio id="happy-audio" src="https://www.bensound.com/bensound-music/bensound-sunny.mp3"></audio>
+</section>
+
+
+<script>
+$(document).ready(function () {
+    let selectedMood = '';
+
+    // Mood-based background color change
+    $(".emoji-btn").click(function () {
+        selectedMood = $(this).data("mood");
+        let color = "";
+
+        switch (selectedMood) {
+            case "Happy":
+                color = "#FFD700"; // Gold
+                break;
+            case "Sad":
+                color = "#87CEFA"; // Light Blue
+                break;
+            case "Angry":
+                color = "#FF6347"; // Tomato Red
+                break;
+            case "Anxious":
+                color = "#D8BFD8"; // Light Purple
+                break;
+            case "Neutral":
+                color = "#D3D3D3"; // Light Gray
+                break;
+        }
+
+        $("body").css("background-color", color);
+    });
+
+
+
+$("#mood-select").change(function () {
+    let mood = $(this).val();
+    let feedback = $("#mood-feedback");
+
+    if (mood === "happy") {
+        feedback.html(`
+            <p>That's wonderful! 😊 Stay joyful and spread the happiness!</p>
+            <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" alt="Happy dance" style="max-width: 300px;">
+        `);
+    } else if (mood === "neutral") {
+        feedback.html(`
+            <p>It's okay to feel neutral. Here's a little peaceful moment for you:</p>
+            <blockquote>"Take a deep breath. You’re doing fine."</blockquote>
+            <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExd3pzcm93ZXo0ODYyeHpvMmk2emVyZTNnb3ZjdmlpMDA5OGJxcnR4MyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/krP2NRkLqnKEg/giphy.gif" alt="Peaceful gif" style="max-width: 200px;">
+        `);
+    } else if (mood === "low") {
+        feedback.html(`
+            <p>Feeling low? Here’s a gentle reminder that you’re not alone 💛</p>
+            <blockquote>"You’ve made it this far, and that’s something to be proud of."</blockquote>
+            <img src="https://media.giphy.com/media/QvBoMEcQ7DQXK/giphy.gif" alt="Uplifting gif" style="max-width: 300px;">
+        `);
+    }
+});
+const compliments = [
+    "You're doing amazing!",
+    "You light up the world 🌟",
+    "You're stronger than you think 💪",
+    "You matter. Always 💖",
+    "You’re a beautiful soul ✨",
+    "Today, you are enough 🌈"
+];
+
+$("#get-compliment").click(function () {
+    let randomCompliment = compliments[Math.floor(Math.random() * compliments.length)];
+    $("#compliment-text").text(randomCompliment);
+});
+$("#play-music").click(function () {
+    const audio = $("#happy-audio")[0];
+
+    if (audio.paused) {
+        audio.play();
+        $(this).text("Stop the Music 🔇");
+    } else {
+        audio.pause();
+        audio.currentTime = 0; // Optional: reset to beginning
+        $(this).text("Play a Happy Tune");
+    }
+});
+
+</script>
+
+<footer>
+    <p>&copy; 2025 Happy Life Project</p>
+</footer>
+
+</body>
+</html>
